@@ -3,7 +3,7 @@
 作成日: 2026-05-22  
 プロジェクト名: **ida-func-call-rank**  
 想定形態: IDA Pro / IDAPython plugin  
-想定ライセンス: MIT License または Apache-2.0
+採用ライセンス: MIT License
 
 ---
 

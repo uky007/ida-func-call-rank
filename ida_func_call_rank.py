@@ -368,6 +368,10 @@ class FunctionCallRankChooser(ida_kernwin.Choose):
         self.options = CallRankOptions()
         self.rows = []
         self._stats = {}
+        # Captured at construction time so run() can detect IDB switches and
+        # rebuild the chooser instead of showing stale data from a previous
+        # database.
+        self._idb_path = _get_idb_path()
         self._scan_and_refilter()
 
     # ---- data lifecycle ----
@@ -570,9 +574,20 @@ class FunctionCallRankPlugin(ida_idaapi.plugin_t):
         return ida_idaapi.PLUGIN_KEEP
 
     def run(self, arg):
-        if FunctionCallRankPlugin.view is None:
-            FunctionCallRankPlugin.view = FunctionCallRankChooser()
-        FunctionCallRankPlugin.view.Show(False)
+        current_idb = _get_idb_path()
+        view = FunctionCallRankPlugin.view
+        if view is None or getattr(view, "_idb_path", None) != current_idb:
+            # First run, or the user has switched to a different IDB while
+            # IDA stayed open. Either way, the cached stats are stale; drop
+            # the old chooser and build a fresh one for the current database.
+            if view is not None:
+                try:
+                    view.Close()
+                except Exception:
+                    pass
+            view = FunctionCallRankChooser()
+            FunctionCallRankPlugin.view = view
+        view.Show(False)
         try:
             widget = ida_kernwin.find_widget(WINDOW_TITLE)
             if widget is not None:

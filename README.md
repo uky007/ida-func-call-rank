@@ -36,17 +36,21 @@ functions.
 
 ## Install
 
-Copy `ida_func_call_rank.py` into your IDA `plugins/` directory:
+1. Copy `ida_func_call_rank.py` into your IDA per-user `plugins/` directory:
 
-| Platform | Path |
-|---|---|
-| Windows | `%APPDATA%\Hex-Rays\IDA Pro\plugins\` |
-| Linux   | `~/.idapro/plugins/` |
-| macOS   | `~/Library/Application Support/IDA Pro/plugins/` |
+   | Platform | Path |
+   |---|---|
+   | Windows | `%APPDATA%\Hex-Rays\IDA Pro\plugins\` |
+   | Linux   | `~/.idapro/plugins/` |
+   | macOS   | `~/Library/Application Support/IDA Pro/plugins/` |
 
-Then restart IDA, or use **Edit → Plugins → Function Call Rank**.
+2. **Restart IDA.** Plugins in the per-user `plugins/` directory are scanned
+   only at startup, so the entry will not appear until IDA is relaunched.
+3. After restart, run it via **Edit → Plugins → Function Call Rank** or the
+   `Ctrl-Shift-C` hotkey, on any open IDB.
 
-IDAPython 3 only. Tested against IDA 7.x / 8.x / 9.x APIs.
+Requirements: IDAPython 3. Tested against IDA 7.x / 8.x / 9.x APIs;
+confirmed working on IDA Pro 8.4.
 
 ---
 
