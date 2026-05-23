@@ -25,7 +25,8 @@ functions.
 - `Unique Callers` — distinct caller functions
 - `Calls Out` — outgoing direct call xrefs
 - `Unique Callees` — distinct callee functions
-- Recursive-call and unknown-callee counters
+- `Recursive` — self-recursive call count (shown as a column and included in CSV)
+- `Unknown` — outgoing calls whose target is not inside any recognized function
 - Jump to function on double-click / Enter
 - Optional filters: hide library / thunk / extern (import) / zero-caller functions
 - CSV export of the current (filtered) view

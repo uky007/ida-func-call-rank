@@ -347,6 +347,8 @@ class FunctionCallRankChooser(ida_kernwin.Choose):
         ["Calls In",       10 | ida_kernwin.Choose.CHCOL_DEC],
         ["Unique Callees", 14 | ida_kernwin.Choose.CHCOL_DEC],
         ["Calls Out",      10 | ida_kernwin.Choose.CHCOL_DEC],
+        ["Recursive",      10 | ida_kernwin.Choose.CHCOL_DEC],
+        ["Unknown",        10 | ida_kernwin.Choose.CHCOL_DEC],
         ["EA",             16 | ida_kernwin.Choose.CHCOL_EA],
         ["Name",           40 | ida_kernwin.Choose.CHCOL_PLAIN],
         ["Segment",        12 | ida_kernwin.Choose.CHCOL_PLAIN],
@@ -383,30 +385,23 @@ class FunctionCallRankChooser(ida_kernwin.Choose):
             self.rows = build_rows(self._stats, self.options)
         finally:
             ida_kernwin.hide_wait_box()
-        self._update_title()
+        self._log_status()
 
     def _refilter_only(self):
         self.rows = build_rows(self._stats, self.options)
-        self._update_title()
+        self._log_status()
 
-    def _update_title(self):
+    def _log_status(self):
+        # We deliberately do NOT touch self.title here. The widget caption is
+        # fixed at WINDOW_TITLE so that find_widget(WINDOW_TITLE),
+        # refresh_chooser(WINDOW_TITLE), the popup hook, and the per-action
+        # widget-title check stay consistent across IDA builds (some IDA
+        # versions actually honor a runtime title reassignment, which would
+        # then desynchronize all of those lookups). The current count and
+        # filter state are written to the Output window instead.
         total = len(self._stats)
         shown = len(self.rows)
         hidden = total - shown
-        # NOTE: ida_kernwin.Choose reads `self.title` only at construction
-        # time on most IDA builds, so re-assigning it here will not refresh
-        # the tab caption. We log the breakdown to the Output window every
-        # time so the user can still see filter impact at a glance.
-        try:
-            self.title = "%s - %d/%d (%d hidden), %s" % (
-                WINDOW_TITLE,
-                shown,
-                total,
-                hidden,
-                self.options.status_text(),
-            )
-        except Exception:
-            pass
         _msg(
             "[func-call-rank] %d / %d functions shown (%d hidden by filters) -- %s"
             % (shown, total, hidden, self.options.status_text())
@@ -424,6 +419,8 @@ class FunctionCallRankChooser(ida_kernwin.Choose):
             str(r.calls_in),
             str(r.unique_callees_count),
             str(r.calls_out),
+            str(r.recursive_calls),
+            str(r.unknown_callees),
             "0x%X" % r.ea,
             r.name,
             r.segment,
