@@ -268,7 +268,7 @@ EA asc
 
 ## 7. 表示列
 
-MVPで必須の列は以下。
+Chooser に表示する列は以下 (MVP実装済み)。
 
 | 列名 | 型 | 説明 |
 |---|---:|---|
@@ -276,18 +276,18 @@ MVPで必須の列は以下。
 | `Calls In` | int | 対象関数へのdirect call xref数 |
 | `Unique Callees` | int | 対象関数が呼ぶユニークなcallee関数数 |
 | `Calls Out` | int | 対象関数内から出るdirect call xref数 |
+| `Recursive` | int | 自己再帰call数 (`Calls In` / `Calls Out` にも含む) |
+| `Unknown` | int | IDAが関数として解決できなかった呼び出し先数 |
 | `EA` | address | 関数開始アドレス |
 | `Name` | string | 関数名 |
 | `Segment` | string | 所属セグメント |
 | `Size` | int | 関数サイズ |
-| `Flags` | string | lib / thunk / static / external等の簡易表示 |
+| `Flags` | string | lib / thunk / extern 等の簡易表示 |
 
-将来的な拡張列:
+将来的な拡張列 (未実装):
 
 | 列名 | 説明 |
 |---|---|
-| `Recursive Calls` | 自己再帰call数 |
-| `Unknown Callees` | IDAが関数として解決できなかったcall先数 |
 | `Import Calls Out` | import/externalへのcall数 |
 | `Jump In` | tail-call候補のjump参照数 |
 | `Jump Out` | 関数外へのjump参照数 |
@@ -368,7 +368,7 @@ Unique Callers = 5
 
 ### 8.6 Recursive Calls
 
-自己再帰はデフォルトでは `Calls In` と `Calls Out` の両方に含める。将来的に `Recursive Calls` を別列として表示する。
+自己再帰はデフォルトでは `Calls In` と `Calls Out` の両方に含めたうえで、`Recursive` 列に自己再帰call数を別途表示する。`Unknown` 列も同様に、IDAが関数として解決できなかった outgoing call の本数を表示する。
 
 ---
 
