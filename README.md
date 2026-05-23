@@ -40,6 +40,26 @@ functions.
 
 ---
 
+## Use cases
+
+`ida-func-call-rank` is meant for the first pass over an unfamiliar binary,
+when function names are sparse and you want quick hints about shared utility
+code.
+
+It is especially useful during malware triage, where frequently reused
+functions often sit behind many static call sites:
+
+- API-hash resolvers and API wrapper layers
+- String decryptors, data decoders, and blob unpacking helpers
+- Configuration or payload decryption routines
+- Dispatchers, VM helpers, and obfuscation support code
+- Logging, error handling, allocator wrappers, and other internal utilities
+
+The Emotet example below shows this pattern in practice: an API-hash resolver
+appears at the top because many distinct callers reference the same helper.
+
+---
+
 ## Install
 
 1. Copy `ida_func_call_rank.py` into your IDA per-user `plugins/` directory:
