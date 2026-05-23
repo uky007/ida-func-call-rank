@@ -1,5 +1,10 @@
 # ida-func-call-rank
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![IDA Pro](https://img.shields.io/badge/IDA%20Pro-7.x%20%7C%208.x%20%7C%209.x-orange.svg)](#install)
+[![IDAPython](https://img.shields.io/badge/IDAPython-3-3776AB.svg)](https://docs.hex-rays.com/developer-guide/idapython)
+[![Latest tag](https://img.shields.io/github/v/tag/uky007/ida-func-call-rank?label=release&color=brightgreen)](https://github.com/uky007/ida-func-call-rank/tags)
+
 A lightweight IDAPython plugin that adds a **sortable, Ghidra-like function
 call-ranking table** to IDA Pro.
 
