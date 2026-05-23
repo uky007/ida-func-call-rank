@@ -2,10 +2,6 @@ __pycache__/
 *.pyc
 *.pyo
 
-# Test sample build artifacts
-tests/samples/toy
-tests/samples/toy.exe
-
 # IDA databases / scratch
 *.idb
 *.i64
