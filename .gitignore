@@ -1,0 +1,23 @@
+__pycache__/
+*.pyc
+*.pyo
+
+# Test sample build artifacts
+tests/samples/toy
+tests/samples/toy.exe
+
+# IDA databases / scratch
+*.idb
+*.i64
+*.id0
+*.id1
+*.id2
+*.nam
+*.til
+*.bak
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+*.swp
